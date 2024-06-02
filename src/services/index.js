@@ -10,8 +10,8 @@ export const getUsers = async () => {
 };
 
 export const getUser = async (userId) => {
-  const response = await api.get(`users?userId=${userId}`);
-  return response.data;
+  const response = await api.get(`users?id=${userId}`);
+  return response.data[0];
 };
 
 export const getUserAlbums = async (userId) => {
