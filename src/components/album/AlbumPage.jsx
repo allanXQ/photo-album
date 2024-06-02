@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getAlbumPhotos } from "../../services";
+import { getAlbumById, getAlbumPhotos } from "../../services";
 
 const AlbumPage = () => {
   const { albumId } = useParams();
   const [photos, setPhotos] = useState([]);
+  const [album, setAlbum] = useState();
 
   useEffect(() => {
     const fetchPhotos = async () => {
       const data = await getAlbumPhotos(albumId);
       setPhotos(data);
     };
+
+    const fetchAlbum = async () => {
+      const data = await getAlbumById(albumId);
+      setAlbum(data);
+    };
+    fetchAlbum();
     fetchPhotos();
   }, [albumId]);
 
