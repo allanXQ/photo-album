@@ -63,8 +63,9 @@ const HomePage = () => {
             sx={{
               minWidth: 300,
             }}
+            key={user.id}
           >
-            <Card key={user.id}>
+            <Card>
               <CardHeader
                 sx={{
                   display: "flex",
