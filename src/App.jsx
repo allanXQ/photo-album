@@ -7,6 +7,7 @@ import LoginPage from "./components/auth/LoginPage";
 import HomePage from "./components/home/HomePage";
 import UserPage from "./components/user/UserPage";
 import AlbumPage from "./components/album/AlbumPage";
+import PhotoPage from "./components/photo/PhotoPage";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
             <Route path="/home" element={<HomePage />} />
             <Route path="/user/:userId" element={<UserPage />} />
             <Route path="/album/:albumId" element={<AlbumPage />} />
+            <Route path="/photo/:photoId" element={<PhotoPage />} />
           </Routes>
         </Router>
       </AuthProvider>
