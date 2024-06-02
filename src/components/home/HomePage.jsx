@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getUsers, getAllAlbums } from "../../services/index";
 import { Link } from "react-router-dom";
+import { Grid, Typography } from "@mui/material";
 
 const HomePage = () => {
   const [users, setUsers] = useState([]);
@@ -21,16 +22,14 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div>
-      <h1>User List</h1>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            <Link to={`/user/${user.id}`}>{user.name}</Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Grid container>
+      <Typography variant="h2">User List</Typography>
+      {users.map((user) => (
+        <li key={user.id}>
+          <Link to={`/user/${user.id}`}>{user.name}</Link>
+        </li>
+      ))}
+    </Grid>
   );
 };
 
