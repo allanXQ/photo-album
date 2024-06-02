@@ -23,3 +23,8 @@ export const getAllAlbums = async (userId) => {
   const response = await api.get(`albums`);
   return response.data;
 };
+
+export const getAlbumById = async (id) => {
+  const response = await api.get(`albums?id=${id}`);
+  return response.data;
+};
