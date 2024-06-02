@@ -29,6 +29,11 @@ export const getAlbumById = async (id) => {
   return response.data;
 };
 
+export const getAlbumPhotos = async (albumId) => {
+  const response = await api.get(`photos?albumId=${albumId}`);
+  return response.data;
+};
+
 export const getPhotoById = async (photoId) => {
   const response = await api.get(`photos/${photoId}`);
   return response.data;

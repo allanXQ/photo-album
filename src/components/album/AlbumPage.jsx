@@ -1,7 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import { getAlbumPhotos } from "../../services";
 
 const AlbumPage = () => {
-  return <div>AlbumPage</div>;
+  const { albumId } = useParams();
+  const [photos, setPhotos] = useState([]);
+
+  useEffect(() => {
+    const fetchPhotos = async () => {
+      const data = await getAlbumPhotos(albumId);
+      setPhotos(data);
+    };
+    fetchPhotos();
+  }, [albumId]);
+
+  console.log(photos);
+
+  return (
+    <div>
+      <h1>Photos in Album</h1>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "10px",
+        }}
+      >
+        {photos.map((photo) => (
+          <div key={photo.id}>
+            <Link to={`/photo/${photo.id}`}>
+              <img
+                src={photo.url}
+                alt={photo.title}
+                style={{ width: "100%" }}
+              />
+              <p>{photo.title}</p>
+            </Link>
+          </div>
+        ))}
+      </div>
+      <Link to="/home">Back to Home</Link>
+    </div>
+  );
 };
 
 export default AlbumPage;
