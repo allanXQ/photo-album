@@ -28,3 +28,13 @@ export const getAlbumById = async (id) => {
   const response = await api.get(`albums?id=${id}`);
   return response.data;
 };
+
+export const getPhotoById = async (photoId) => {
+  const response = await api.get(`photos/${photoId}`);
+  return response.data;
+};
+
+export const updatePhotoTitle = async (photoId, title) => {
+  const response = await api.patch(`photos/${photoId}`, { title });
+  return response.data;
+};
