@@ -1,41 +1,82 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import { getUser, getUserAlbums } from "../../services";
+import { useParams, useNavigate } from "react-router-dom";
+import { getUser, getUserAlbums, getAlbumPhotos } from "../../services";
+import {
+  Card,
+  CardActionArea,
+  CardMedia,
+  CardContent,
+  Typography,
+  Grid,
+  Box,
+} from "@mui/material";
 
 const UserPage = () => {
   const { userId } = useParams();
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
   const [albums, setAlbums] = useState([]);
-  const [user, setUser] = useState([]);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const data = await getUser(userId);
-      setUser(data);
+    const fetchUserData = async () => {
+      const userData = await getUser(userId);
+      setUser(userData);
+      const userAlbums = await getUserAlbums(userId);
+
+      const albumsWithPhotos = await Promise.all(
+        userAlbums.map(async (album) => {
+          const photos = await getAlbumPhotos(album.id);
+          return {
+            ...album,
+            thumbnailUrl: photos[0]
+              ? photos[0].thumbnailUrl
+              : "https://via.placeholder.com/150",
+            photosCount: photos.length,
+          };
+        })
+      );
+
+      setAlbums(albumsWithPhotos);
     };
 
-    const fetchAlbums = async () => {
-      const data = await getUserAlbums(userId);
-      setAlbums(data);
-    };
-    fetchUser();
-    fetchAlbums();
+    fetchUserData();
   }, [userId]);
 
-  console.log(userId);
+  if (!user) return <Typography>Loading user data...</Typography>;
 
   return (
-    <div>
-      <h1>User Albums</h1>
-      <p>Total Albums: {albums.length}</p>
-      <ul>
+    <Box sx={{ padding: 4 }}>
+      <Typography variant="h4" gutterBottom>
+        {user.username}'s Albums
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom>
+        Total Albums: {albums.length}
+      </Typography>
+      <Grid container spacing={4}>
         {albums.map((album) => (
-          <li key={album.id}>
-            <Link to={`/album/${album.id}`}>{album.title}</Link>
-          </li>
+          <Grid item key={album.id} xs={12} sm={6} md={4}>
+            <Card raised>
+              <CardActionArea onClick={() => navigate(`/album/${album.id}`)}>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={album.thumbnailUrl}
+                  alt={album.title}
+                />
+                <CardContent sx={{ height: 60 }}>
+                  <Typography gutterBottom variant="h6" component="div" noWrap>
+                    {album.title}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    Number of Photos: {album.photosCount}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
         ))}
-      </ul>
-      <Link to="/home">Back to Home</Link>
-    </div>
+      </Grid>
+    </Box>
   );
 };
 
