@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { getUsers, getAllAlbums } from "../../services/index";
+import { getUsers, getAllAlbums } from "../../services";
 import { Link } from "react-router-dom";
 import {
-  Avatar,
   Box,
+  Grid,
   Card,
   CardContent,
-  CardHeader,
-  Grid,
+  CardActions,
   Typography,
+  Avatar,
+  Button,
 } from "@mui/material";
 
 const HomePage = () => {
@@ -16,74 +17,66 @@ const HomePage = () => {
   const [albums, setAlbums] = useState([]);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const data = await getUsers();
-      setUsers(data);
-    };
-    const fetchAlbums = async () => {
-      const data = await getAllAlbums();
-      setAlbums(data);
+    const fetchData = async () => {
+      const usersData = await getUsers();
+      const albumsData = await getAllAlbums();
+      setUsers(usersData);
+      setAlbums(albumsData);
     };
 
-    fetchUsers();
-    fetchAlbums();
+    fetchData();
   }, []);
 
-  const getAlbumsByUserId = (userId) => {
-    const userAlbums = albums.filter((album) => album.userId === userId);
-    return userAlbums.length;
+  const getAlbumsCountByUserId = (userId) => {
+    return albums.filter((album) => album.userId === userId).length;
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: 2,
-      }}
-    >
-      <Typography variant="h5">User List</Typography>
-      <Grid
-        container
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: 2,
-          flexWrap: "wrap",
-          flexFlow: "row wrap",
-          // maxWidth: 700,
-        }}
-      >
+    <Box sx={{ flexGrow: 1, padding: 4 }}>
+      <Typography variant="h4" gutterBottom>
+        User List
+      </Typography>
+      <Grid container spacing={2}>
         {users.map((user) => (
-          <Grid
-            item
-            sx={{
-              minWidth: 300,
-            }}
-            key={user.id}
-          >
-            <Card>
-              <CardHeader
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: 10,
-                }}
-                avatar={
-                  <Avatar sx={{ width: 60, height: 60 }}>
-                    {user.username[0]}
-                  </Avatar>
-                }
-                title={user.username}
-                subheader={`Albums: ${getAlbumsByUserId(user.id)}`}
-              />
+          <Grid item key={user.id} xs={12} sm={6} md={4} lg={3}>
+            <Card raised>
               <CardContent>
-                <Link to={`/user/${user.id}`}>View User</Link>
+                <Avatar
+                  sx={{
+                    width: 56,
+                    height: 56,
+                    bgcolor: "secondary.main",
+                    margin: "auto",
+                  }}
+                >
+                  {user.username[0]}
+                </Avatar>
+                <Typography
+                  variant="h6"
+                  gutterBottom
+                  component="div"
+                  sx={{ textAlign: "center" }}
+                >
+                  {user.username}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  sx={{ textAlign: "center" }}
+                >
+                  {user.email}
+                </Typography>
               </CardContent>
+              <CardActions sx={{ justifyContent: "center" }}>
+                <Link
+                  to={`/user/${user.id}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <Button size="small" variant="outlined" color="primary">
+                    View Albums ({getAlbumsCountByUserId(user.id)})
+                  </Button>
+                </Link>
+              </CardActions>
             </Card>
           </Grid>
         ))}
