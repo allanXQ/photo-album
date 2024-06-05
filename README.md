@@ -1,4 +1,3 @@
-````markdown
 # Photo Album Viewer
 
 ## Overview
@@ -39,8 +38,6 @@ You will need the following tools installed on your system:
    git clone https://github.com/allanXQ/photo-album.git
    cd photo-album
    ```
-````
-
 2. **Install dependencies:**
 
    ```bash
@@ -74,4 +71,4 @@ This application is deployed on Vercel. Follow these steps to deploy your own in
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License.
