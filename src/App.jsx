@@ -8,6 +8,7 @@ import HomePage from "./components/home/HomePage";
 import UserPage from "./components/user/UserPage";
 import AlbumPage from "./components/album/AlbumPage";
 import PhotoPage from "./components/photo/PhotoPage";
+import LandingPage from "./components/landing/LandingPage";
 
 const App = () => {
   return (
@@ -15,7 +16,8 @@ const App = () => {
       <AuthProvider>
         <Router>
           <Routes>
-            <Route path="/" element={<LoginPage />} />
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/user/:userId" element={<UserPage />} />
             <Route path="/album/:albumId" element={<AlbumPage />} />
