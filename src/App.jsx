@@ -9,6 +9,7 @@ import UserPage from "./components/user/UserPage";
 import AlbumPage from "./components/album/AlbumPage";
 import PhotoPage from "./components/photo/PhotoPage";
 import LandingPage from "./components/landing/LandingPage";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 const App = () => {
   return (
@@ -18,10 +19,12 @@ const App = () => {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/user/:userId" element={<UserPage />} />
-            <Route path="/album/:albumId" element={<AlbumPage />} />
-            <Route path="/photo/:photoId" element={<PhotoPage />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/user/:userId" element={<UserPage />} />
+              <Route path="/album/:albumId" element={<AlbumPage />} />
+              <Route path="/photo/:photoId" element={<PhotoPage />} />
+            </Route>
           </Routes>
         </Router>
       </AuthProvider>
