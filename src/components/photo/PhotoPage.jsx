@@ -2,18 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getPhotoById, updatePhotoTitle } from "../../services";
 import { Box, TextField, Button, Typography } from "@mui/material";
+import { useLoader } from "../../context/LoaderContext";
 
 const PhotoPage = () => {
   const { photoId } = useParams();
   const navigate = useNavigate();
   const [photo, setPhoto] = useState(null);
   const [title, setTitle] = useState("");
+  const { setLoading } = useLoader();
 
   useEffect(() => {
     const fetchPhoto = async () => {
+      setLoading(true);
       const data = await getPhotoById(photoId);
       setPhoto(data);
       setTitle(data.title);
+      setLoading(false);
     };
 
     fetchPhoto();
@@ -29,8 +33,6 @@ const PhotoPage = () => {
     }
   };
 
-  if (!photo) return <Typography>Loading...</Typography>;
-
   return (
     <Box
       sx={{
@@ -44,11 +46,11 @@ const PhotoPage = () => {
       }}
     >
       <Typography variant="h5" gutterBottom>
-        Photo: {photo.title}
+        Photo: {photo?.title}
       </Typography>
       <img
-        src={photo.url}
-        alt={photo.title}
+        src={photo?.url}
+        alt={photo?.title}
         style={{ maxWidth: "100%", height: "auto", maxHeight: 400 }}
       />
       <TextField

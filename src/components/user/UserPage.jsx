@@ -10,44 +10,47 @@ import {
   Grid,
   Box,
 } from "@mui/material";
+import { useLoader } from "../../context/LoaderContext";
 
 const UserPage = () => {
   const { userId } = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [albums, setAlbums] = useState([]);
+  const { setLoading } = useLoader();
 
   useEffect(() => {
     const fetchUserData = async () => {
+      setLoading(true);
       const userData = await getUser(userId);
       setUser(userData);
       const userAlbums = await getUserAlbums(userId);
 
       const albumsWithPhotos = await Promise.all(
-        userAlbums.map(async (album) => {
-          const photos = await getAlbumPhotos(album.id);
-          return {
-            ...album,
-            thumbnailUrl: photos[0]
-              ? photos[0].thumbnailUrl
-              : "https://via.placeholder.com/150",
-            photosCount: photos.length,
-          };
-        })
+        Array.isArray(userAlbums) &&
+          userAlbums.map(async (album) => {
+            const photos = await getAlbumPhotos(album.id);
+            return {
+              ...album,
+              thumbnailUrl: photos[0]
+                ? photos[0].thumbnailUrl
+                : "https://via.placeholder.com/150",
+              photosCount: photos.length,
+            };
+          })
       );
 
       setAlbums(albumsWithPhotos);
+      setLoading(false);
     };
 
     fetchUserData();
   }, [userId]);
 
-  if (!user) return <Typography>Loading user data...</Typography>;
-
   return (
     <Box sx={{ padding: 4 }}>
       <Typography variant="h4" gutterBottom>
-        {user.username}'s Albums
+        {user?.username}'s Albums
       </Typography>
       <Typography variant="subtitle1" gutterBottom>
         Total Albums: {albums.length}

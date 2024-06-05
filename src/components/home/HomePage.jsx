@@ -11,17 +11,21 @@ import {
   Avatar,
   Button,
 } from "@mui/material";
+import { useLoader } from "../../context/LoaderContext";
 
 const HomePage = () => {
   const [users, setUsers] = useState([]);
   const [albums, setAlbums] = useState([]);
+  const { setLoading } = useLoader();
 
   useEffect(() => {
+    setLoading(true);
     const fetchData = async () => {
       const usersData = await getUsers();
       const albumsData = await getAllAlbums();
       setUsers(usersData);
       setAlbums(albumsData);
+      setLoading(false);
     };
 
     fetchData();

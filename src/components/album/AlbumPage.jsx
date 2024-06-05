@@ -10,30 +10,32 @@ import {
   CardContent,
   CardActionArea,
 } from "@mui/material";
+import { useLoader } from "../../context/LoaderContext";
 
 const AlbumPage = () => {
   const { albumId } = useParams();
   const navigate = useNavigate();
   const [album, setAlbum] = useState(null);
   const [photos, setPhotos] = useState([]);
+  const { setLoading } = useLoader();
 
   useEffect(() => {
     const fetchAlbumData = async () => {
+      setLoading(true);
       const albumData = await getAlbumById(albumId);
       setAlbum(albumData);
       const albumPhotos = await getAlbumPhotos(albumId);
       setPhotos(albumPhotos);
+      setLoading(false);
     };
 
     fetchAlbumData();
   }, [albumId]);
 
-  if (!album) return <Typography>Loading album data...</Typography>;
-
   return (
     <Box sx={{ flexGrow: 1, padding: 4 }}>
       <Typography variant="h4" gutterBottom>
-        Photos in "{album[0].title}"
+        Photos in "{Array.isArray(album) && album[0].title}"
       </Typography>
       <Typography variant="subtitle1" gutterBottom>
         Total Photos: {photos.length}
