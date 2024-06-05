@@ -1,16 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
-import { useAuth } from "../../context/AuthContext"; // Ensure this context provides the login method
+import { useAuth } from "../../context/AuthContext";
 import { Box, Typography, Container } from "@mui/material";
+import { jwtDecode } from "jwt-decode";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
 
   const handleLoginSuccess = (credentialResponse) => {
-    console.log("Login Success:", credentialResponse);
-    const decodedToken = jwtDecode(credentialResponse.credential); // Assuming jwtDecode to decode the Google token
+    const decodedToken = jwtDecode(credentialResponse.credential);
     login({
       name: decodedToken.name,
       email: decodedToken.email,
@@ -38,7 +38,6 @@ const LoginPage = () => {
         <GoogleLogin
           onSuccess={handleLoginSuccess}
           onError={() => console.log("Login Failed")}
-          // theme="filled_black" // A theme option provided by the GoogleLogin component to style the button
         />
       </Box>
     </Container>
