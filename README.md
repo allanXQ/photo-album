@@ -50,6 +50,13 @@ You will need the following tools installed on your system:
    ```
    Access the application at [http://localhost:5173](http://localhost:5173).
 
+### Testing
+
+1. **Run the tests:**
+   ```bash
+   npm run test
+   ```
+
 ## Deployment
 
 This application is deployed on Vercel. Follow these steps to deploy your own instance:
