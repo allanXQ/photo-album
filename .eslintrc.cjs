@@ -15,6 +15,6 @@ module.exports = {
     "react/jsx-no-target-blank": "off",
     "react-refresh/only-export-components": "off",
     "react/prop-types": "off",
-    "no-unused-vars": "warn",
+    "no-unused-vars": "off",
   },
 };
