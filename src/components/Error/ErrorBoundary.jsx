@@ -1,6 +1,6 @@
 // ErrorBoundary.js
 import { Box } from "@mui/material";
-import React, { Component } from "react";
+import { Component } from "react";
 
 class ErrorBoundary extends Component {
   constructor(props) {
