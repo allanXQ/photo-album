@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getPhotoById, updatePhotoTitle } from "../../services";
 import { Box, TextField, Button, Typography } from "@mui/material";
@@ -21,7 +21,7 @@ const PhotoPage = () => {
     };
 
     fetchPhoto();
-  }, [photoId]);
+  }, [photoId, setLoading]);
 
   const handleSave = async () => {
     const updated = await updatePhotoTitle(photoId, title);

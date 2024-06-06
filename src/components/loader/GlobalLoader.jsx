@@ -1,5 +1,4 @@
 // GlobalLoader.js
-import React from "react";
 import { ClipLoader } from "react-spinners";
 import { useLoader } from "../../context/LoaderContext";
 

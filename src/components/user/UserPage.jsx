@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getUser, getUserAlbums, getAlbumPhotos } from "../../services";
 import {
@@ -45,12 +45,12 @@ const UserPage = () => {
     };
 
     fetchUserData();
-  }, [userId]);
+  }, [userId, setLoading]);
 
   return (
     <Box sx={{ padding: 4 }}>
       <Typography variant="h4" gutterBottom>
-        {user?.username}'s Albums
+        {user?.username}&quot;s Albums
       </Typography>
       <Typography variant="subtitle1" gutterBottom>
         Total Albums: {albums.length}
