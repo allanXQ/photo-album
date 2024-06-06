@@ -29,7 +29,7 @@ const UserPage = () => {
       const albumsWithPhotos = await Promise.all(
         Array.isArray(userAlbums) &&
           userAlbums.map(async (album) => {
-            const photos = await getAlbumPhotos(album.id);
+            const photos = (await getAlbumPhotos(album.id)) || [];
             return {
               ...album,
               thumbnailUrl: photos[0]
