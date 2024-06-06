@@ -50,7 +50,7 @@ const UserPage = () => {
   return (
     <Box sx={{ padding: 4 }}>
       <Typography variant="h4" gutterBottom>
-        {user?.username}'s Albums
+        {user?.username}&quot;s Albums
       </Typography>
       <Typography variant="subtitle1" gutterBottom>
         Total Albums: {albums.length}

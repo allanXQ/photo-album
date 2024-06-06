@@ -35,7 +35,7 @@ const AlbumPage = () => {
   return (
     <Box sx={{ flexGrow: 1, padding: 4 }}>
       <Typography variant="h4" gutterBottom>
-        Photos in "{Array.isArray(album) && album[0].title}"
+        Photos in &quot;{Array.isArray(album) && album[0].title}&quot;
       </Typography>
       <Typography variant="subtitle1" gutterBottom>
         Total Photos: {photos.length}
