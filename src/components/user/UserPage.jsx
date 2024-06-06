@@ -45,7 +45,7 @@ const UserPage = () => {
     };
 
     fetchUserData();
-  }, [userId]);
+  }, [userId, setLoading]);
 
   return (
     <Box sx={{ padding: 4 }}>

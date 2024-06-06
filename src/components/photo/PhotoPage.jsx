@@ -21,7 +21,7 @@ const PhotoPage = () => {
     };
 
     fetchPhoto();
-  }, [photoId]);
+  }, [photoId, setLoading]);
 
   const handleSave = async () => {
     const updated = await updatePhotoTitle(photoId, title);

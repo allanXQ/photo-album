@@ -29,7 +29,7 @@ const HomePage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [setLoading]);
 
   const getAlbumsCountByUserId = (userId) => {
     return albums.filter((album) => album.userId === userId).length;

@@ -30,7 +30,7 @@ const AlbumPage = () => {
     };
 
     fetchAlbumData();
-  }, [albumId]);
+  }, [albumId, setLoading]);
 
   return (
     <Box sx={{ flexGrow: 1, padding: 4 }}>
